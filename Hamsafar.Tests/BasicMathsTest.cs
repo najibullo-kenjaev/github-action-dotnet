@@ -15,7 +15,7 @@ public class BasicMathsTest
     public void Test_SubstractMethod()
     {
         BasicMaths bm = new BasicMaths();
-        double res = bm.Substract(10, 10);
+        double res = bm.Substract(20, 20);
         Assert.Equal(res, 0);
     }
     [Fact]
