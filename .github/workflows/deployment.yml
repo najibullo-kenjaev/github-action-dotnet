@@ -10,13 +10,5 @@ jobs:
         run: dotnet restore
       - name: Test App
         run: dotnet test
-  build:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Get repository code 
-        uses: actions/checkout@v3
-      - name: Install dependencies
-        run: dotnet restore
       - name: Build App
         run: dotnet publish -c Release -r linux-x64
