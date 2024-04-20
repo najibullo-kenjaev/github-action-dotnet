@@ -16,7 +16,7 @@ jobs:
       - name: Build App
         run: dotnet publish -c Release -r linux-x64 -o publish
       - name: Upload dotnet test results
-          uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
           with:
             name: dotnet-publish
             path: publish 
