@@ -29,7 +29,27 @@ jobs:
             ${{ runner.os }}-nuget
       - name: Install dependencies
         run: dotnet restore
-      - name: Test App
-        run: dotnet test
+      - name: Test with dotnet
+          run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
       - name: Build App
         run: dotnet publish -c Release -r linux-x64
+      - name: Upload dotnet test results
+          uses: actions/upload-artifact@v4
+          with:
+            name: dotnet-results-${{ matrix.dotnet-version }}
+            path: TestResults-${{ matrix.dotnet-version }}
+  deploy:
+    needs: test
+    strategy:
+      matrix:
+        dotnet-version: [ '3.1.x', '6.0.x' ]
+        os: [ubuntu-latest, windows-lates]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with: 
+          name: dotnet-results-${{ matrix.dotnet-version }}
+
+    
+  
