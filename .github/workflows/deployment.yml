@@ -31,13 +31,13 @@ jobs:
         run: dotnet restore
       - name: Test with dotnet
           run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
-      - name: Build App
-        run: dotnet publish -c Release -r linux-x64
       - name: Upload dotnet test results
           uses: actions/upload-artifact@v4
           with:
             name: dotnet-results-${{ matrix.dotnet-version }}
-            path: TestResults-${{ matrix.dotnet-version }}
+            path: TestResults-${{ matrix.dotnet-version }} 
+      - name: Build App
+        run: dotnet publish -c Release -r linux-x64
   deploy:
     needs: test
     strategy:
