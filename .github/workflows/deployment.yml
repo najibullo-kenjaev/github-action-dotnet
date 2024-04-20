@@ -29,14 +29,14 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Test with dotnet
-          run: dotnet test --logger trx --results-directory 'TestResults'
+          run: dotnet test
+      - name: Build App
+        run: dotnet publish -c Release -r linux-x64 -o publish
       - name: Upload dotnet test results
           uses: actions/upload-artifact@v4
           with:
-            name: dotnet-results
-            path: TestResults-${{ matrix.dotnet-version }} 
-      - name: Build App
-        run: dotnet publish -c Release -r linux-x64
+            name: dotnet-publish
+            path: publish 
   deploy:
     needs: test
     strategy:
@@ -48,7 +48,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with: 
-          name: dotnet-results-${{ matrix.dotnet-version }}
+          name: dotnet-publish
 
     
   
