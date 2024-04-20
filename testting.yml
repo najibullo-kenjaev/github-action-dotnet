@@ -1,7 +1,7 @@
 name: Test dotnet app
 on: push
 jobs:
-  test_my_code:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Get repository code
@@ -10,3 +10,12 @@ jobs:
         run: dotnet restore
       - name: Test App
         run: dotnet test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get repository code 
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build App
+        run: dotnet publish -c Release -r linux-x64
