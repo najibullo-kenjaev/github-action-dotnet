@@ -5,27 +5,10 @@ on:
       - master
 jobs:
   test:
-    strategy:
-      matrix:
-        dotnet-version: [ '3.1.x', '6.0.x' ]
     runs-on: ubuntu-latest
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
-      - name: Setup dotnet ${{ matrix.dotnet-version }}
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
-      - name: Display dotnet version
-        run: dotnet --version
-      - name: Cache NuGet
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          # Look to see if there is a cache hit for the corresponding requirements file
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget
       - name: Install dependencies
         run: dotnet restore
       - name: Test with dotnet
@@ -42,8 +25,7 @@ jobs:
     strategy:
       matrix:
         dotnet-version: [ '3.1.x', '6.0.x' ]
-        os: [ubuntu-latest, windows-lates]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
