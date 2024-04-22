@@ -1,11 +1,12 @@
 name: Test dotnet app
-on: 
+on: workflow_dispatch:
   push:
     branches:
       - master
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: 
+      - self-hosted
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
@@ -14,20 +15,7 @@ jobs:
       - name: Test with dotnet
         run: dotnet test
       - name: Build App
-        run: dotnet publish -c Release -r linux-x64 -o publish
-      - name: Upload dotnet test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: dotnet-publish
-          path: publish 
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with: 
-          name: dotnet-publish
+        run: dotnet publish -c Release -r win-x64 -o publish
 
     
   
