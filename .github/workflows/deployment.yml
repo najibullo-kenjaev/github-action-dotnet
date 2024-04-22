@@ -6,8 +6,7 @@ on:
       - master
 jobs:
   test:
-    runs-on: 
-      - self-hosted
+    runs-on: windows-latest
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
